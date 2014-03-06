@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .lib.MPDProxy import mpd_proxy
+from players.lib.MPDProxy import mpd_proxy
 import urllib.request
 from django.http import HttpResponse
 
