@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<!-- 
+load the js to update the song info
+-->
+<script type="text/javascript">
+	$(document).ready(function() {
+		function updateEvery() {
+			$(".currently-playing").load("{% url 'players:currently_playing' %}");
+		};
+	
+		setInterval(updateEvery, 3000);
+	});
+</script>
+
+<div class="player-status">
+	<h2>Currently Playing</h2>
+	<div class="currently-playing">
+	</div>
+</div>

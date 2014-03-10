@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block panel_hook %}
+	<div data-role="panel" id="player">
+    	{% include "players/status.html" %}
+	</div><!-- /panel -->
+{% endblock %}
+
+{% block header %}
+	<a href="#player" class="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-notext">Display Player</a>
+	<h1>
+		{% block pagetitle %}
+			List of Webradio Stations
+			{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+		{% endblock %}
+	</h1>
+{% endblock %}
+
+{% block content %}
+    <ul>
+		{% for station in stations %}
+            <li>
+            <h2>{{ station.name }}</h2>
+            <ul>
+            	{% for genre in station.genres.all %}
+            		<li>{{ genre.name }}</li>
+            	{% endfor %}
+            </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

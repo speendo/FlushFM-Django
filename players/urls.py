@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^play/$', views.play, name='play'),
     url(r'^currentsong.html$', views.currently_playing, name='currently_playing'),
+    url(r'^status.html$', views.status, name='status'),
 )

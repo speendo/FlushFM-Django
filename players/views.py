@@ -2,10 +2,14 @@ from django.shortcuts import render
 from players.lib.MPDProxy import mpd_proxy
 import urllib.request
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse
 
 def index(request):
     print("Index loaded")
     return render(request, 'players/index.html',)
+
+def status(request):
+    return render(request, 'players/status.html')
 
 def play(request):
     print("button pressed")
@@ -37,9 +41,9 @@ def get_uri(uri):
 
 def start_replay(uri):
     print("Sending \"" + uri + "\" to the client.")
-    mpd_proxy.clear()
-    mpd_proxy.add(uri)
-    mpd_proxy.play()
+    print(mpd_proxy.clear())
+    print(mpd_proxy.add(uri))
+    print(mpd_proxy.play())
 
 
 def stop_repay():

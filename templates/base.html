@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html> 
 <head> 
-	<title>{% block headtitle %}FlushFM 0.1{% endblock %}</title> 
+	<title>{% block headtitle %}FlushFM{% endblock %}</title> 
 	<meta name="viewport" content="width=device-width, initial-scale=1"> 
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
 	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -11,10 +11,12 @@
 <body>
 
 <div data-role="page">
-<div data-role="header">
-		<h1>{% block pagetitle %}FlushFM 0.1{% endblock %}</h1>
+	{% block panel_hook %}{% endblock %}
+
+	<div data-role="header">
+		{% block header %}<h1>FlushFM</h1>{% endblock %}
 	</div><!-- /header -->
-<div data-role="content">	
+	<div data-role="content">	
 		{% block content %}{% endblock %}
 	</div><!-- /content -->
 </div><!-- /page -->
