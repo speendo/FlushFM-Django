@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="{% static 'players/style.css' %}" />
+{% endblock %}
 
 {% block panel_hook %}
 	<div data-role="panel" id="player">
@@ -7,7 +12,7 @@
 {% endblock %}
 
 {% block header %}
-	<a href="#player" class="ui-btn ui-shadow ui-corner-all ui-icon-info ui-btn-icon-notext">Display Player</a>
+	<a href="#player" class="ui-btn ui-shadow ui-corner-all ui-icon-radio ui-btn-icon-notext">Display Player</a>
 	<h1>
 		{% block pagetitle %}
 			List of Webradio Stations

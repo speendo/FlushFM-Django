@@ -1,9 +1,4 @@
 {% extends "base_with_panel.html" %}
-{% load staticfiles %}
-
-{% block head %}
-<script src="{% static 'players/update_current_song.js' %}"></script>
-{% endblock %}
 
 {% block pagetitle %}
 MPD-Client
@@ -18,7 +13,4 @@ MPD-Client
 	<input type="submit" value="Play" data-inline="true" name="play" />
 	<input type="submit" value="Stop" data-inline="true" name="stop" />
 </form>
-
-<div class="currently-playing">
-</div>
 {% endblock %}

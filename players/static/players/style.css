@@ -1,0 +1,11 @@
+.ui-icon-radio:after {
+	background-image: url("images/radio.svg");
+	/* Icon by http://www.wpzoom.com/wpzoom/new-freebie-wpzoom-developer-icon-set-154-free-icons/ (Creative Commons Attribution-ShareAlike 3.0 Unported License) */
+	background-size: 18px 18px;
+}
+/* Fallback */
+.ui-nosvg .ui-icon-radio:after {
+	background-image: url("images/radio.png");
+	/* Icon by http://www.wpzoom.com/wpzoom/new-freebie-wpzoom-developer-icon-set-154-free-icons/ (Creative Commons Attribution-ShareAlike 3.0 Unported License) */
+	background-size: 18px 18px;
+}
