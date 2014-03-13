@@ -1,16 +1,20 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from stations.models import Station
-from stations.forms import StationForm, GenreFormSet, AddressFormSet
+from stations.models import Station, Genre
+from stations.forms import StationForm, GenreFormSet, AddressFormSet, GenreForm
+from django.views.generic import CreateView, ListView
 
 # List view
-from django.views.generic import ListView
 class StationList(ListView):
     model = Station
     context_object_name = 'stations'
-    
-# Create view
-from django.views.generic import CreateView
+
+# Create genre view
+class GenreCreate(CreateView):
+    model = Genre
+    form_class = GenreForm
+
+# Create station view
 class StationCreate(CreateView):
     model = Station
     form_class = StationForm

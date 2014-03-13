@@ -3,6 +3,7 @@ from django.db import models
 class Genre(models.Model):
     name = models.CharField(max_length=20)
     description = models.TextField()
+    color = models.CharField(max_length=7, null=True)
     
 class Station(models.Model):
     name = models.CharField(max_length=40)
@@ -10,6 +11,9 @@ class Station(models.Model):
     # Genre (Many-To-Many)
 #    genre = models.ManyToManyField(Genre)
     genres = models.ManyToManyField(Genre, through='StationGenre')
+    created_at = models.DateTimeField(auto_now_add=False, null=True)
+    last_modified_at = models.DateTimeField(auto_now=False, null=True)
+    last_listened_at = models.DateTimeField(null=True)
 
 class Address(models.Model):
     url = models.URLField()

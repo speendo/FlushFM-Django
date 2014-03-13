@@ -1,0 +1,45 @@
+{% extends "base_with_panel.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+	{{ block.super }}
+	<script src='{% static 'stations/spectrum/spectrum.js' %}'></script>
+	<link rel='stylesheet' href='{% static 'stations/spectrum/spectrum.css' %}' />
+{% endblock %}
+
+{% block pagetitle %}
+New Genre
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% endblock %}
+
+{% block content %}
+<form action="." method="post">
+	{% csrf_token %}
+	<p>
+		{{ form.name.errors }}
+		<label for="id_name">Name:</label>
+		{{ form.name }}
+	</p>
+	<p>
+		{{ form.description.errors }}
+		<label for="id_description">Description:</label>
+		{{ form.description }}
+	</p>
+   	<p>
+   		{{ form.color.errors }}
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#id_color").spectrum({
+					flat: true,
+					showButtons: false,
+					showInput: true,
+					preferredFormat: "hex",
+				});
+			});	
+		</script>
+   		<label for="id_color">Color:</label>
+		{{ form.color }}
+   	</p>
+	<input type="submit" value="Create" />
+</form>
+{% endblock %}
