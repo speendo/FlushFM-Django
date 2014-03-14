@@ -15,5 +15,5 @@ class GenreForm(ModelForm):
     class Meta:
         model = Genre
         widgets = {
-                   'color': TextInput(attrs={'type': 'color'}),
+                   'color': TextInput(attrs={'type': 'color', 'data-role': 'none'}),
                    }
