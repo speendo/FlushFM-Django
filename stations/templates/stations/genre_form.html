@@ -5,6 +5,7 @@
 	{{ block.super }}
 	<script src='{% static 'stations/spectrum/spectrum.js' %}'></script>
 	<link rel='stylesheet' href='{% static 'stations/spectrum/spectrum.css' %}' />
+	<script src='{% static 'stations/style_example.js' %}'></script>
 {% endblock %}
 
 {% block pagetitle %}
@@ -13,7 +14,7 @@ New Genre
 {% endblock %}
 
 {% block content %}
-<form action="." method="post">
+<form action="" method="post">
 	{% csrf_token %}
 	<p>
 		{{ form.name.errors }}
@@ -30,10 +31,14 @@ New Genre
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$("#id_color").spectrum({
-					flat: true,
+//					flat: true,
 					showButtons: false,
 					showInput: true,
 					preferredFormat: "hex",
+					// change color of example button
+					move: function(bcol) {
+						setExampleBackTextColor(bcol);
+					},
 				});
 			});	
 		</script>
@@ -42,4 +47,7 @@ New Genre
    	</p>
 	<input type="submit" value="Create" />
 </form>
+
+<button id="example" class="ui-btn ui-btn-inline ui-mini">Preview</button>
+
 {% endblock %}
