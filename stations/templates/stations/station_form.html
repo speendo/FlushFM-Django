@@ -1,62 +1,34 @@
 {% extends "base_with_panel.html" %}
-
-{% block head %}
-<script type="text/javascript">
-	$(function() {
-		$(".inline.{{ genre_form.prefix }}").formset({
-			prefix: "{{ genre_form.prefix }}",
-		})
-		$(".inline.{{ address_form.prefix }}").formset({
-			prefix: "{{ address_form.prefix }}",
-		})
-	})
-</script>
-{% endblock %}
+{% load staticfiles %}
 
 {% block pagetitle %}
-List of Webradio Stations
+New Station
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 {% endblock %}
 
 {% block content %}
-<form action="." method="post">{% csrf_token %}
-	<div>
-    	{{ form.as_p }}
-	</div>
-	<fieldset>
-		<legend>Genres</legend>
-			{{ genre_form.management_form }}
-			{{ genre_form.non_form_errors }}
-			{% for form in genre_form %}
-				{{ form.id }}
-				<div class="inline {{ genre_form.prefix }}">
-					{{ form.name_errors }}
-					{{ form.name.label_tag }}
-					{{ form.name }}
-					{{ form.description_errors }}
-					{{ form.description.label_tag }}
-					{{ form.description }}
-				</div>
-			{% endfor %}
-	</fieldset>
-	<fieldset>
-		<legend>Addresses</legend>
-			{{ address_form.management_form }}
-			{{ address_form.non_form_errors }}
-			{% for form in address_form %}
-				{{ form.id }}
-				<div class="inline {{ genre_form.prefix }}">
-					{{ form.url_errors }}
-					{{ form.url.label_tag }}
-					{{ form.url }}
-					{{ form.priority_errors }}
-					{{ form.priority.label_tag }}
-					{{ form.priority }}
-					{{ form.is_working_errors }}
-					{{ form.is_working.label_tag }}
-					{{ form.is_working }}
-				</div>
-			{% endfor %}
+<form action="" method="post">
+	{% csrf_token %}
+	
+   	<p>
+		{{ form.name.errors }}
+		<label for="id_name">Name:</label>
+		{{ form.name }}
+	</p>
+	<p>
+		{{ form.description.errors }}
+		<label for="id_description">Description:</label>
+		{{ form.description }}
+	</p>
+	<fieldset id="addresses">
+		<legend>Web Addresses:</legend>
+		{% for a_form in address_formset %}
+			<script type='text/javascript'>
+				var addressTemplate = '<div class="addresses_set">{{ a_form.url }}</div>';
+			</script>
+			<script type='text/javascript' src='{% static 'stations/createStationFormsets.js' %}'></script>
+		{% endfor %}
+		{{ address_formset.management_form }}
 	</fieldset>
     <input type="submit" value="Create" />
 </form>

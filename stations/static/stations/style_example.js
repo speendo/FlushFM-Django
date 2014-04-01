@@ -50,7 +50,6 @@ $(document).ready(function() {
 		$("#id_color").val(initCol);
 	}
 	
-	
 	setExampleBackTextColor(initCol);
 	
 	// text
