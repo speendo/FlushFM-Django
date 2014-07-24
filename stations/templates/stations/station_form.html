@@ -1,5 +1,6 @@
-{% extends "base_with_panel.html" %}
+{% extends "base_with_header.html" %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block pagetitle %}
 New Station
@@ -7,6 +8,9 @@ New Station
 {% endblock %}
 
 {% block content %}
+
+{% crispy form %}
+
 <form action="" method="post">
 	{% csrf_token %}
 	
@@ -23,13 +27,17 @@ New Station
 	<fieldset id="addresses">
 		<legend>Web Addresses:</legend>
 		{% for a_form in address_formset %}
-			<script type='text/javascript'>
-				var addressTemplate = '<div class="addresses_set">{{ a_form.url }}</div>';
-			</script>
-			<script type='text/javascript' src='{% static 'stations/createStationFormsets.js' %}'></script>
 		{% endfor %}
 		{{ address_formset.management_form }}
 	</fieldset>
     <input type="submit" value="Create" />
 </form>
+{% endblock %}
+
+{% block body_scripts %}
+	{{ block.super }}
+	<script type='text/javascript'>
+		var addressTemplate = '<div class="addresses_set">{{ a_form.url }}</div>';
+	</script>
+	<script type='text/javascript' src='{% static 'stations/createStationFormsets.js' %}'></script>
 {% endblock %}

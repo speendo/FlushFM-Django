@@ -1,4 +1,4 @@
-{% extends "base_with_header.html" %}
+{% extends "base_with_panel.html" %}
 
 {% block pagetitle %}
 MPD-Client

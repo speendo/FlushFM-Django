@@ -20,7 +20,7 @@ List of Webradio Stations
 				<th>
 					<ul class="list-group">
 	            	{% for genre in station.genres.all %}
-	            		<li class="list-group-item"><button type="button" class="btn" style="background-color: #{{ genre.color }};">{{ genre.name }}</button></li>
+	            		<li class="list-group-item"><button type="button" class="btn" style="background-color: #{{ station.genre.color }};">{{ genre.name }}</button></li>
 	            	{% endfor %}
 	            	</ul>
 	            </th>

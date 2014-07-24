@@ -46,13 +46,10 @@ $(document).ready(function() {
 	// get background color
 	initCol = $("#id_color").val();
 	
-	// if initColor == "", set random color
-	if (initCol == "") {
+	// if initColor == "" or "000000" (dirty hack), set random color
+	if (initCol == "" || "000000") {
 		initCol = Math.floor(Math.random()*16777215).toString(16);
 		$("#id_color").val(initCol);
-		// Hack as this feature is not provided in the current version of pick-a-color
-		$("#id_color").next('div.input-group-btn').find('.color-preview.current-color').css('background-color', '#' + initCol);
-
 	}
 	
 	setExampleBackTextColor(initCol);

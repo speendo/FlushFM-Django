@@ -13,25 +13,32 @@ New Genre
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid form-group">
-	<button id="example" class="btn pull-right">Preview</button>
-</div>
+<div class="container-fluid"><button id="example" class="btn pull-right">Preview</button></div>
 
-<div class="container-fluid">
-	{% crispy form %}
-</div>
+
+<form role="form" action="" method="post">
+	{% csrf_token %}
+	<div class="form-group">
+		{{ form.name|as_crispy_field }}
+		
+		{{ form.description|as_crispy_field }}
+		
+		{{ form.color|as_crispy_field }}
+	</div>
+	
+	<button type="submit" class="btn btn-primary">Create</button>
+</form>
 
 {% endblock %}
 
 {% block body_scripts %}
-	{{ block.super }}
+	{{ block.super }}	
 	<script src='{% static 'stations/pick-a-color/tinycolor-0.9.15.min.js' %}'></script>
 	<script src='{% static 'stations/pick-a-color/pick-a-color-1.2.3.min.js' %}'></script>
 
 	<script type="text/javascript">
 		$(".color-picker").pickAColor({
 			showSavedColors: false,
-			allowBlank: true,
 			inlineDropdown: true
 		});
 	</script>
