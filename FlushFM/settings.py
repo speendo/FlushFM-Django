@@ -37,7 +37,6 @@ INSTALLED_APPS = (
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'south',  # migrations like in ruby on rails
-	'crispy_forms',  # better(?) forms
 	'stations',
 	'players',
 )

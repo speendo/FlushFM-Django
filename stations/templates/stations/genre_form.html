@@ -1,6 +1,5 @@
 {% extends "base_with_header.html" %}
 {% load staticfiles %}
-{% load crispy_forms_tags %}
 
 {% block scripts %}
 	{{ block.super }}
@@ -18,7 +17,30 @@ New Genre
 </div>
 
 <div class="container-fluid">
-	{% crispy form %}
+	<form action="{% url 'stations:list' %}" method="post">
+	{% csrf_token %}
+	{{ form.non_field_errors }}
+
+	<!-- Name -->
+	<div class="{{ form.name.auto_id }}_container">
+		{{ form.name.errors }}
+		<label class="col-md-2 col-xs-3" for="{{ form.name.auto_id }}">{{ form.name.label }}</label>
+		<input class="col-md-10 col-xs-9" id="{{ form.name.auto_id }}" type="text" name="{{ form.name.name }}" maxlength="{{ form.name.field.widget.attrs.maxlength }}" value="{{ form.name.value |default_if_none:"" }}"/>
+	</div>
+
+	<!-- Description -->
+	<div class="{{ form.description.auto_id }}_container">
+		{{ form.description.errors }}
+		<label class="col-md-2 col-xs-3" for="{{ form.description.auto_id }}">{{ form.description.label }}</label>
+		<textarea class="col-md-10 col-xs-9" id="{{ form.description.auto_id }}" type="text" name="{{ form.description.name }}" rows="{{ form.description.field.widget.attrs.rows }}" cols="{{ form.description.field.widget.attrs.cols }}">{{ form.description.value |default_if_none:"" }}</textarea>
+	</div>
+
+	<!-- Color -->
+		{{ form.color.errors }}
+		<label class="col-md-2 col-xs-3" for="{{ form.color.auto_id }}">{{ form.color.label }}</label>
+		<input class="col-md-2 col-xs-2 color-picker" id="{{ form.color.auto_id }}" type="text" name="{{ form.color.name }}" maxlength="{{ form.color.field.widget.attrs.maxlength }}" value="{{ form.color.value |default_if_none:"" }}"/>
+
+	</form>
 </div>
 
 {% endblock %}
