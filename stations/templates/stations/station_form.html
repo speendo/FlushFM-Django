@@ -1,6 +1,5 @@
 {% extends "base_with_header.html" %}
 {% load staticfiles %}
-{% load crispy_forms_tags %}
 
 {% block pagetitle %}
 New Station
@@ -8,29 +7,52 @@ New Station
 {% endblock %}
 
 {% block content %}
-
-{% crispy form %}
-
-<form action="" method="post">
+<div class="container-fluid">
+	<form class="form-horizontal" action="{% url 'stations:list' %}" method="post" role="form">
 	{% csrf_token %}
-	
-   	<p>
+	{{ form.non_field_errors }}
+
+	<!-- Name -->
+	<div class="{{ form.name.auto_id }}_container form-group">
 		{{ form.name.errors }}
-		<label for="id_name">Name:</label>
-		{{ form.name }}
-	</p>
-	<p>
+		<label class="col-sm-2" for="{{ form.name.auto_id }}">{{ form.name.label }}</label>
+		<input class="col-sm-10" id="{{ form.name.auto_id }}" type="text" name="{{ form.name.name }}" maxlength="{{ form.name.field.widget.attrs.maxlength }}" value="{{ form.name.value |default_if_none:"" }}"/>
+	</div>
+
+	<!-- Description -->
+	<div class="{{ form.description.auto_id }}_container form-group">
 		{{ form.description.errors }}
-		<label for="id_description">Description:</label>
-		{{ form.description }}
-	</p>
+		<label class="col-sm-2" for="{{ form.description.auto_id }}">{{ form.description.label }}</label>
+		<textarea class="col-sm-10" id="{{ form.description.auto_id }}" type="text" name="{{ form.description.name }}" rows="{{ form.description.field.widget.attrs.rows }}" cols="{{ form.description.field.widget.attrs.cols }}">{{ form.description.value |default_if_none:"" }}</textarea>
+	</div>
+
+	<!-- Addresses -->
 	<fieldset id="addresses">
-		<legend>Web Addresses:</legend>
+		<legend>Web Addresses</legend>
 		{% for a_form in address_formset %}
+			<!-- URL -->
+			<div class="{{ a_form.url.auto_id }}_container form-group">
+				{{ a_form.description.errors }}
+				<label class="col-sm-2" for="{{ a_form.url.auto_id }}">{{ a_form.url.label }}</label>
+				<input class="col-sm-10" id="{{ a_form.url.auto_id }}" type="text" name="{{ a_form.url.name }}" maxlength="{{ a_form.url.field.widget.attrs.maxlength }}" value="{{ a_form.url.value |default_if_none:"" }}"/>
+			</div>
 		{% endfor %}
-		{{ address_formset.management_form }}
 	</fieldset>
-    <input type="submit" value="Create" />
+	
+	<!-- Station Genres -->
+	<fieldset id="station-genres">
+		<legend>Genres</legend>
+		{% for a_form in genre_formset %}
+			<!-- URL -->
+			<div class="{{ a_form.genre.auto_id }}_container form-group">
+				{{ a_form.description.errors }}
+				<label class="col-sm-2" for="{{ a_form.genre.auto_id }}">{{ a_form.genre.label }}</label>
+				<input class="col-sm-10" id="{{ a_form.genre.auto_id }}" type="text" name="{{ a_form.genre.name }}" maxlength="{{ a_form.genre.field.widget.attrs.maxlength }}" value="{{ a_form.genre.value |default_if_none:"" }}"/>
+			</div>
+		{% endfor %}
+	</fieldset>
+	
+	<input type="submit" value="Create" />
 </form>
 {% endblock %}
 
