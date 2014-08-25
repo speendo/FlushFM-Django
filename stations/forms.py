@@ -18,7 +18,11 @@ class StationForm(ModelForm):
 	class Meta:
 		model = Station
 
-GenreFormSet = inlineformset_factory(Station, StationGenre)
+GenreFormSet = inlineformset_factory(
+	Station,
+	StationGenre,
+	extra=1
+)
 
 AddressFormSet = inlineformset_factory(
 	Station,
