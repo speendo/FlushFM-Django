@@ -1,3 +1,7 @@
+jQuery.fn.findAndSelf = function(selector) {
+	return this.find(selector).add(this.filter(selector))
+}
+
 function getLastFields() {
 	return $("#addresses .addresses_set").last();
 }
@@ -25,11 +29,16 @@ function addFields() {
 	// set data
 	newFields.data("address_index", total);
 
+	newFields.findAndSelf('[class*=-0-]').each(function() {
+		var classNum = $(this).attr('class').replace('-0-', '-' + total + '-');
+		$(this).attr('class', classNum);
+	});
+
 	// replace index in fields
-	newFields.find(':input:not(.delete_button)').each(function() {
+	newFields.find(':input.address_url').each(function() {
 		var name = $(this).attr('name').replace('-0-', '-' + total + '-');
-		var id = 'id_' + name;
-		$(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+		var id = $(this).attr('id').replace('-0-', '-' + total + '-');
+		$(this).attr({'name': name, 'id': id}).val('');
 	});
 	
 	// replace index in "for elements"
@@ -37,6 +46,9 @@ function addFields() {
 		var newFor = $(this).attr('for').replace('-0-', '-' + total + '-');
 		$(this).attr('for', newFor);
 	});
+	
+	// hide clearer
+	newFields.find(".clearer").hide();
 	
 	// preparate animation
 	if (total > 0) {
@@ -67,13 +79,19 @@ function deleteFields(curFields) {
 				// set data to lower index
 				$(this).data("address_index", lowerIndex);
 				// set rest
-				$(this).find(':input').each(function() {
-					var name = $(this).attr('name').replace('-' + otherIndex + '-','-' + lowerIndex + '-');
-					var id = 'id_' + name;
-			        $(this).attr({'name': name, 'id': id})
+				$(this).findAndSelf('[class*=-' + otherIndex + '-]').each(function() {
+					var classNum = $(this).attr('class').replace('-' + otherIndex + '-', '-' + lowerIndex + '-');
+					$(this).attr('class', classNum);
 				});
+
+				$(this).find(':input.address_url').each(function() {
+					var name = $(this).attr('name').replace('-' + otherIndex + '-', '-' + lowerIndex + '-');
+					var id = 'id_' + name;
+					$(this).attr({'name': name, 'id': id})
+				});
+
 				$(this).find('label').each(function() {
-					var newFor = $(this).attr('for').replace('-' + otherIndex + '-','-' + lowerIndex + '-');
+					var newFor = $(this).attr('for').replace('-' + otherIndex + '-', '-' + lowerIndex + '-');
 					$(this).attr('for', newFor);
 				});
 			}
@@ -83,13 +101,11 @@ function deleteFields(curFields) {
 //			'height': 'hide',
 			'opacity': 'hide'
 		},
+			// remove
 			function() {
 				$(this).remove();
 			}
 		);
-		
-		// remove
-//		$(curFields).remove();
 		
 		// finally lower total (no need to reduce by one because if necessary this is done in setTotal()
 		setTotal(getTotal());
@@ -114,6 +130,15 @@ $(document).ready(function() {
 	$("#addresses").on("input change", ".address_url", function() {
 		if ($(this).val() == "") {
 			deleteFields($(this).closest(".addresses_set"));
+		} else {
+			$(this).next(".clearer").animate({
+				'opacity': 'show'
+			});
 		}
+	});
+	
+	$("#addresses").on("click", ".clearer", function () {
+		$(this).closest(':input.address_url').val('').focus();
+		deleteFields($(this).closest(".addresses_set"));
 	});
 });

@@ -29,27 +29,18 @@ New Station
 	<!-- Addresses -->
 	<fieldset id="addresses">
 		<legend>Web Addresses</legend>
-		{% for a_form in address_formset %}
-			<!-- URL -->
-			<div class="{{ a_form.url.auto_id }}_container form-group">
-				{{ a_form.description.errors }}
-				<label class="col-sm-2" for="{{ a_form.url.auto_id }}">{{ a_form.url.label }}</label>
-				<input class="col-sm-10" id="{{ a_form.url.auto_id }}" type="text" name="{{ a_form.url.name }}" maxlength="{{ a_form.url.field.widget.attrs.maxlength }}" value="{{ a_form.url.value |default_if_none:"" }}"/>
-			</div>
-		{% endfor %}
+			{{ address_formset.management_form }}
 	</fieldset>
 	
 	<!-- Station Genres -->
 	<fieldset id="station-genres">
 		<legend>Genres</legend>
-		{% for a_form in genre_formset %}
-			<!-- URL -->
-			<div class="{{ a_form.genre.auto_id }}_container form-group">
-				{{ a_form.description.errors }}
-				<label class="col-sm-2" for="{{ a_form.genre.auto_id }}">{{ a_form.genre.label }}</label>
-				<input class="col-sm-10" id="{{ a_form.genre.auto_id }}" type="text" name="{{ a_form.genre.name }}" maxlength="{{ a_form.genre.field.widget.attrs.maxlength }}" value="{{ a_form.genre.value |default_if_none:"" }}"/>
+			<!-- Genre -->
+			<div class="{{ genre_formset.0.genre.auto_id }}_container form-group">
+				{{ genre_formset.0.description.errors }}
+				<label class="col-sm-2" for="{{ genre_formset.0.genre.auto_id }}">{{ genre_formset.0.genre.label }}</label>
+				<input class="col-sm-10" id="{{ genre_formset.0.genre.auto_id }}" type="text" name="{{ genre_formset.0.genre.name }}" maxlength="{{ genre_formset.0.genre.field.widget.attrs.maxlength }}" value="{{ genre_formset.0.genre.value |default_if_none:"" }}"/>
 			</div>
-		{% endfor %}
 	</fieldset>
 	
 	<input type="submit" value="Create" />
@@ -59,7 +50,19 @@ New Station
 {% block body_scripts %}
 	{{ block.super }}
 	<script type='text/javascript'>
-		var addressTemplate = '<div class="addresses_set">{{ a_form.url }}</div>';
+		var addressTemplate = '			<!-- URL --> \n' +
+			'			<div class="{{ address_formset.0.url.auto_id }}_container form-group addresses_set"> \n' +
+			'				{{ address_formset.0.description.errors }} \n' +
+			'				<div class="input-group has-feedback"> \n' +
+			'					<span class="input-group-btn"> \n' +
+			'						<button type="button" class="btn btn-default"> \n' +
+			'							<span class="glyphicon glyphicon-sort"></span> \n' +
+			'						</button> \n' +
+			'					</span> \n' +
+			'					<input class="form-control address_url has_clear" id="{{ address_formset.0.url.auto_id }}" type="text" name="{{ address_formset.0.url.auto_id }}" maxlength="{{ address_formset.0.url.field.widget.attrs.maxlength }}" value="{{ address_formset.0.url.value |default_if_none:"" }}" placeholder="{{ address_formset.0.url.label }}"/> \n' +
+			'					<span class="glyphicon glyphicon-remove form-control-feedback clearer"></span> \n' +
+			'				</div> \n' +
+			'			</div>';
 	</script>
 	<script type='text/javascript' src='{% static 'stations/createStationFormsets.js' %}'></script>
 {% endblock %}
