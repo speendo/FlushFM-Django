@@ -65,6 +65,10 @@ function addFields() {
 		'opacity': 'show'
 	});
 	
+	// glyphicons
+	$('#addresses_id .addresses_set .sort_handle:not(:last)').removeClass("glyphicon-plus");
+	$('#addresses_id .addresses_set .sort_handle:not(:last)').addClass("glyphicon-sort");
+	
 	total++;
 	setTotal(total);
 }
@@ -112,6 +116,22 @@ function deleteFields(curFields) {
 	}
 }
 
+function sortable() {
+	var panelList = $('#addresses_id');
+
+	panelList.sortable({
+		handle: '.sort_handle',
+		update: function() {
+			$('.addresses_set', panelList).each(function(index, elem) {
+				var $listItem = $(elem),
+				newIndex = $listItem.index();
+			});
+		},
+		items: '> li:not(:last)',
+		axis: 'y'
+	});
+}
+
 $(document).ready(function() {
 	// init
 	addFields();
@@ -137,8 +157,11 @@ $(document).ready(function() {
 		}
 	});
 	
+	// clearer
 	$("#addresses").on("click", ".clearer", function () {
 		$(this).closest(':input.address_url').val('').focus();
 		deleteFields($(this).closest(".addresses_set"));
 	});
+	
+	sortable();
 });

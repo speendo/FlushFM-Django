@@ -1,6 +1,11 @@
 {% extends "base_with_header.html" %}
 {% load staticfiles %}
 
+{% block scripts %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'stations/station_form.css' %}">
+{% endblock %}
+
 {% block pagetitle %}
 New Station
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -29,7 +34,9 @@ New Station
 	<!-- Addresses -->
 	<fieldset id="addresses">
 		<legend>Web Addresses</legend>
-			{{ address_formset.management_form }}
+			<ul id="addresses_id">
+				{{ address_formset.management_form }}
+			</ul>
 	</fieldset>
 	
 	<!-- Station Genres -->
@@ -49,20 +56,19 @@ New Station
 
 {% block body_scripts %}
 	{{ block.super }}
+	<script type='text/javascript' src='{% static 'touchPunch.js' %}'></script>
+	<script type='text/javascript' src='{% static 'sortable.js' %}'></script>
+	
 	<script type='text/javascript'>
 		var addressTemplate = '			<!-- URL --> \n' +
-			'			<div class="{{ address_formset.0.url.auto_id }}_container form-group addresses_set"> \n' +
-			'				{{ address_formset.0.description.errors }} \n' +
-			'				<div class="input-group has-feedback"> \n' +
-			'					<span class="input-group-btn"> \n' +
-			'						<button type="button" class="btn btn-default"> \n' +
-			'							<span class="glyphicon glyphicon-sort"></span> \n' +
-			'						</button> \n' +
-			'					</span> \n' +
-			'					<input class="form-control address_url has_clear" id="{{ address_formset.0.url.auto_id }}" type="text" name="{{ address_formset.0.url.auto_id }}" maxlength="{{ address_formset.0.url.field.widget.attrs.maxlength }}" value="{{ address_formset.0.url.value |default_if_none:"" }}" placeholder="{{ address_formset.0.url.label }}"/> \n' +
-			'					<span class="glyphicon glyphicon-remove form-control-feedback clearer"></span> \n' +
-			'				</div> \n' +
-			'			</div>';
+			'				<li class="{{ address_formset.0.url.auto_id }}_container form-group addresses_set"> \n' +
+			'					{{ address_formset.0.description.errors }} \n' +
+			'					<div class="input-group has-feedback"> \n' +
+			'						<span class="input-group-addon glyphicon glyphicon-plus sort_handle"></span> \n' +
+			'						<input class="form-control address_url has_clear" id="{{ address_formset.0.url.auto_id }}" type="text" name="{{ address_formset.0.url.auto_id }}" maxlength="{{ address_formset.0.url.field.widget.attrs.maxlength }}" value="{{ address_formset.0.url.value |default_if_none:"" }}" placeholder="{{ address_formset.0.url.label }}"/> \n' +
+			'						<span class="glyphicon glyphicon-remove form-control-feedback clearer"></span> \n' +
+			'					</div> \n' +
+			'				</li>';
 	</script>
 	<script type='text/javascript' src='{% static 'stations/createStationFormsets.js' %}'></script>
 {% endblock %}
