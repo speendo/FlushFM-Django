@@ -1,4 +1,5 @@
 import mpd
+from Exception.ConnectionError import ConnectionRefusedError
 
 
 class MPDProxy:
@@ -14,7 +15,10 @@ class MPDProxy:
 		return self._call_with_reconnect(getattr(self.client, name))
 
 	def connect(self, host, port):
-		self.client.connect(host, port)
+		try:
+			self.client.connect(host, port)
+		except ConnectionRefusedError:
+			raise
 
 	def _call_with_reconnect(self, func):
 		def wrapper(*args, **kwargs):
