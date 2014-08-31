@@ -13,7 +13,7 @@ New Station
 
 {% block content %}
 <div class="container-fluid">
-	<form class="form-horizontal" action="{% url 'stations:list' %}" method="post" role="form">
+	<form class="form-horizontal noEnterSubmit" action="{% url 'stations:list' %}" method="post" role="form">
 	{% csrf_token %}
 	{{ form.non_field_errors }}
 
@@ -42,11 +42,18 @@ New Station
 	<!-- Station Genres -->
 	<fieldset id="station-genres">
 		<legend>Genres</legend>
+			<!-- Selected Genres -->
+			<ul id="selected_genres">
+			</ul>
 			<!-- Genre -->
 			<div class="{{ genre_formset.0.genre.auto_id }}_container form-group">
-				{{ genre_formset.0.description.errors }}
-				<label class="col-sm-2" for="{{ genre_formset.0.genre.auto_id }}">{{ genre_formset.0.genre.label }}</label>
-				<input class="col-sm-10" id="{{ genre_formset.0.genre.auto_id }}" type="text" name="{{ genre_formset.0.genre.name }}" maxlength="{{ genre_formset.0.genre.field.widget.attrs.maxlength }}" value="{{ genre_formset.0.genre.value |default_if_none:"" }}"/>
+				<div class="input-group has-feedback">
+					{{ genre_formset.0.description.errors }}
+					<input class="form-control genre_name" id="{{ genre_formset.0.name.auto_id }}" type="text" name="{{ genre_formset.0.name.auto_id }}" maxlength="{{ genre_formset.0.name.field.widget.attrs.maxlength }}" value="{{ genre_formset.0.name.value |default_if_none:"" }}" placeholder="{{ genre_formset.0.name.label }}"/>
+					<span class="input-group-btn">
+						<button class="btn btn-default genre_add" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
+					</span>
+				</div>
 			</div>
 	</fieldset>
 	
@@ -69,6 +76,8 @@ New Station
 			'						<span class="glyphicon glyphicon-remove form-control-feedback clearer"></span> \n' +
 			'					</div> \n' +
 			'				</li>';
+		var genreElement = '<li class="genre"><span class="label" style="background-color:%BGCOL%"><span class="glyphicon glyphicon-music"></span> %VALUE% <span class="glyphicon glyphicon-remove remove"></span></span></li>';
 	</script>
 	<script type='text/javascript' src='{% static 'stations/createStationFormsets.js' %}'></script>
+	<script type='text/javascript' src='{% static 'stations/addGenres.js' %}'></script>
 {% endblock %}

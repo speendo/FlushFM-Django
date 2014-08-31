@@ -1,5 +1,4 @@
 import mpd
-from Exception.ConnectionError import ConnectionRefusedError
 
 
 class MPDProxy:
@@ -17,7 +16,7 @@ class MPDProxy:
 	def connect(self, host, port):
 		try:
 			self.client.connect(host, port)
-		except ConnectionRefusedError:
+		except ConnectionRefusedError: # here's a warning. how to get rid of it?
 			raise
 
 	def _call_with_reconnect(self, func):
