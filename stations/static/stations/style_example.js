@@ -2,9 +2,9 @@ function changeExampleText(initValue) {
 	var actName = $("#id_name").val();
 	
 	if (actName == "") {
-		$("#example").text(initValue);
+		$("#example .genre_name").text(initValue);
 	} else {
-		$("#example").text(actName);
+		$("#example .genre_name").text(actName);
 	}
 }
 

@@ -1,4 +1,5 @@
 import mpd
+import warnings
 
 
 class MPDProxy:
@@ -8,7 +9,11 @@ class MPDProxy:
 		self.port = port
 
 		self.client.timeout = timeout
-		self.connect(host, port)
+		try:
+			self.connect(host, port)
+		except ConnectionRefusedError:
+			warnings.warn("ConnectionRefusedError, but ignoring for the moment.",
+				RuntimeWarning)
 
 	def __getattr__(self, name):
 		return self._call_with_reconnect(getattr(self.client, name))
@@ -16,7 +21,7 @@ class MPDProxy:
 	def connect(self, host, port):
 		try:
 			self.client.connect(host, port)
-		except ConnectionRefusedError: # here's a warning. how to get rid of it?
+		except mpd.ConnectionError:
 			raise
 
 	def _call_with_reconnect(self, func):

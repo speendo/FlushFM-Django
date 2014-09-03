@@ -1,5 +1,6 @@
 {% extends "base_with_header.html" %}
 {% load staticfiles %}
+{% load genre %}
 
 {% block scripts %}
 	{{ block.super }}
@@ -12,12 +13,13 @@ New Genre
 {% endblock %}
 
 {% block content %}
+
 <div class="container-fluid form-group">
-	<button id="example" class="btn pull-right">Preview</button>
+	{% genre "Preview" "FFFFFF" css_id="example" css_class="label pull-right" %}
 </div>
 
 <div class="container-fluid">
-	<form class="form-horizontal" action="{% url 'stations:list' %}" method="post" role="form">
+	<form id="genre_form" class="form-horizontal" action="{% url 'stations:list' %}" method="post" role="form">
 	{% csrf_token %}
 	{{ form.non_field_errors }}
 
@@ -61,4 +63,5 @@ New Genre
 	</script>
 
 	<script src='{% static 'stations/style_example.js' %}'></script>
+	<script src='{% static 'stations/genre_ajax.js' %}'></script>
 {% endblock %}

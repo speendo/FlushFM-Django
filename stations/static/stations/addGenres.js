@@ -5,23 +5,25 @@ function replaceValue(val, bgcol) {
 
 function getCol(val) {
 	// to be done
-	return "#5882FA";
+	return "5882FA";
 }
 
 function appendList() {
-	if ($('.genre_name').val() != '') {
+	if ($('.genre_name_input').val() != '') {
+		console.log("appending");
 		$('ul#selected_genres').append(
-			replaceValue($('.genre_name').val(), getCol($('.genre_name').val()))
+			replaceValue($('.genre_name_input').val(), getCol($('.genre_name_input').val()))
 		);
-		$('.genre_name').val('');
+		$('.genre_name_input').val('');
 	}
 }
 
 function addItems() {
 	$('.genre_add').click(function() {
+		alert("value <" + $('.genre_name_input').val() + ">");
 		appendList();
 	});
-	$('.genre_name').keyup(function(event){
+	$('.genre_name_input').keyup(function(event){
 		if(event.keyCode == 13) {
 			appendList();
 		}
