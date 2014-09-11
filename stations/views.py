@@ -1,7 +1,29 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from stations.models import Station, Genre
 from stations.forms import StationForm, GenreFormSet, AddressFormSet, GenreForm
 from django.views.generic import CreateView, ListView
+from django.core import serializers
+
+
+# Json Response for Ajax
+class JSONResponseMixin(object):
+	"""
+	A mixin that can be used to render a JSON response.
+	"""
+	def render_to_json_response(self, context, **response_kwargs):
+		"""
+		Returns a JSON response, transforming 'context' to make the payload.
+		"""
+		return JsonResponse(
+			self.get_data(context),
+			**response_kwargs
+		)
+
+	def get_data(self, context):
+		"""
+		Returns an object that will be serialized as JSON by json.dumps().
+		"""
+		return serializers.serialize("json", context)
 
 
 # List view

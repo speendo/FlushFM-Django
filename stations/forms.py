@@ -12,27 +12,31 @@ class GenreForm(ModelForm):
 		widgets = {
 			'color': TextInput(attrs={'class': 'color-picker'}),
 			}
+		fields = ['name', 'description', 'color']
 
 
 class StationForm(ModelForm):
 	class Meta:
 		model = Station
+		fields = ['name', 'description']
 
 GenreFormSet = inlineformset_factory(
 	Station,
 	StationGenre,
-	extra=1
+	extra = 1,
+    fields = ['genre']
 )
 
 AddressFormSet = inlineformset_factory(
 	Station,
 	Address,
 	can_order=True,
-	extra=1,
-	widgets={
+	extra = 1,
+	widgets = {
 		'url': URLInput(attrs={
 			'class': 'address_url',
 			'data-clear-btn': 'true'
 		}),
-	}
+	},
+    fields = ['url']
 )

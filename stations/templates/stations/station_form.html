@@ -50,7 +50,7 @@ New Station
 			<div class="{{ genre_formset.0.genre.auto_id }}_container form-group">
 				<div class="input-group has-feedback">
 					{{ genre_formset.0.description.errors }}
-					<input class="form-control genre_name_input" id="{{ genre_formset.0.name.auto_id }}" type="text" name="{{ genre_formset.0.name.auto_id }}" maxlength="{{ genre_formset.0.name.field.widget.attrs.maxlength }}" value="{{ genre_formset.0.name.value |default_if_none:"" }}" placeholder="{{ genre_formset.0.name.label }}"/>
+					<input class="form-control genre_name_input typeahead" id="{{ genre_formset.0.name.auto_id }}" type="text" name="{{ genre_formset.0.name.auto_id }}" maxlength="{{ genre_formset.0.name.field.widget.attrs.maxlength }}" value="{{ genre_formset.0.name.value |default_if_none:"" }}" placeholder="{{ genre_formset.0.name.label }}"/>
 					<span class="input-group-btn">
 						<button class="btn btn-default genre_add" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
 					</span>
@@ -66,6 +66,7 @@ New Station
 	{{ block.super }}
 	<script type='text/javascript' src='{% static 'touchPunch.js' %}'></script>
 	<script type='text/javascript' src='{% static 'sortable.js' %}'></script>
+	<script type='text/javascript' src='{% static 'typeahead.bundle.min.js' %}'></script>
 	
 	<script type='text/javascript'>
 		var addressTemplate = '			<!-- URL --> \n' +

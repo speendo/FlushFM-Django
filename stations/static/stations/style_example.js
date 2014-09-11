@@ -4,7 +4,7 @@ function changeExampleText(initValue) {
 	if (actName == "") {
 		$("#example .genre_name").text(initValue);
 	} else {
-		$("#example .genre_name").text(actName);
+		$("#example .genre_name").text(" " + actName);
 	}
 }
 
