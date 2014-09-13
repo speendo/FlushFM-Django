@@ -10,7 +10,6 @@ function getCol(val) {
 
 function appendList() {
 	if ($('.genre_name_input').val() != '') {
-		console.log("appending");
 		$('ul#selected_genres').append(
 			replaceValue($('.genre_name_input').val(), getCol($('.genre_name_input').val()))
 		);
@@ -77,7 +76,7 @@ function autoComplete() {
 }
 
 $(document).ready(function() {
-	autoComplete();
+	//autoComplete();
 	
 	addItems();
 	

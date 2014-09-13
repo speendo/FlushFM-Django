@@ -15,51 +15,64 @@ New Station
 {% block content %}
 <div class="container-fluid">
 	<form class="form-horizontal noEnterSubmit" action="{% url 'stations:list' %}" method="post" role="form">
-	{% csrf_token %}
-	{{ form.non_field_errors }}
+		{% csrf_token %}
+		{{ form.non_field_errors }}
 
-	<!-- Name -->
-	<div class="{{ form.name.auto_id }}_container form-group">
-		{{ form.name.errors }}
-		<label class="col-sm-2" for="{{ form.name.auto_id }}">{{ form.name.label }}</label>
-		<input class="col-sm-10" id="{{ form.name.auto_id }}" type="text" name="{{ form.name.name }}" maxlength="{{ form.name.field.widget.attrs.maxlength }}" value="{{ form.name.value |default_if_none:"" }}"/>
-	</div>
+		<!-- Name -->
+		<div class="{{ form.name.auto_id }}_container form-group">
+			{{ form.name.errors }}
+			<label class="col-sm-2 control-label" for="{{ form.name.auto_id }}">{{ form.name.label }}</label>
+			<div class="col-sm-10">
+				<input class="col-sm-10 form-control" id="{{ form.name.auto_id }}" type="text" name="{{ form.name.name }}" maxlength="{{ form.name.field.widget.attrs.maxlength }}" value="{{ form.name.value |default_if_none:"" }}"/>
+			</div>
+		</div>
 
-	<!-- Description -->
-	<div class="{{ form.description.auto_id }}_container form-group">
-		{{ form.description.errors }}
-		<label class="col-sm-2" for="{{ form.description.auto_id }}">{{ form.description.label }}</label>
-		<textarea class="col-sm-10" id="{{ form.description.auto_id }}" type="text" name="{{ form.description.name }}" rows="{{ form.description.field.widget.attrs.rows }}" cols="{{ form.description.field.widget.attrs.cols }}">{{ form.description.value |default_if_none:"" }}</textarea>
-	</div>
+		<!-- Description -->
+		<div class="{{ form.description.auto_id }}_container form-group">
+			{{ form.description.errors }}
+			<label class="col-sm-2 control-label" for="{{ form.description.auto_id }}">{{ form.description.label }}</label>
+			<div class="col-sm-10">
+				<textarea class="col-sm-10 form-control" id="{{ form.description.auto_id }}" type="text" name="{{ form.description.name }}" rows="{{ form.description.field.widget.attrs.rows }}" cols="{{ form.description.field.widget.attrs.cols }}">{{ form.description.value |default_if_none:"" }}</textarea>
+			</div>
+		</div>
 
-	<!-- Addresses -->
-	<fieldset id="addresses">
-		<legend>Web Addresses</legend>
-			<ul id="addresses_id">
+		<!-- Addresses -->
+		<fieldset id="addresses">
+			<legend>Web Addresses</legend>
+			<ul id="addresses_id" class="col-sm-12">
 				{{ address_formset.management_form }}
 			</ul>
-	</fieldset>
-	
-	<!-- Station Genres -->
-	<fieldset id="station-genres">
-		<legend>Genres</legend>
-			<!-- Selected Genres -->
-			<ul id="selected_genres">
-			</ul>
-			<!-- Genre -->
+		</fieldset>
+
+		<!-- Station Genres -->
+		<fieldset id="station-genres">
+			<legend>Genres</legend>
 			<div class="{{ genre_formset.0.genre.auto_id }}_container form-group">
-				<div class="input-group has-feedback">
-					{{ genre_formset.0.description.errors }}
-					<input class="form-control genre_name_input typeahead" id="{{ genre_formset.0.name.auto_id }}" type="text" name="{{ genre_formset.0.name.auto_id }}" maxlength="{{ genre_formset.0.name.field.widget.attrs.maxlength }}" value="{{ genre_formset.0.name.value |default_if_none:"" }}" placeholder="{{ genre_formset.0.name.label }}"/>
-					<span class="input-group-btn">
-						<button class="btn btn-default genre_add" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
-					</span>
+				{{ genre_formset.0.description.errors }}
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<!-- Genre -->
+					<div class="input-group has-feedback tag_input">
+						<input class="genre_name_input typeahead form-control" id="genre_name" type="text" name="genre_name" maxlength="{{ genre_formset.0.name.field.widget.attrs.maxlength }}" value="{{ genre_formset.0.name.value |default_if_none:"" }}" placeholder="{{ genre_formset.0.name.label }}"/>
+						<span class="input-group-btn">
+							<button class="btn btn-default genre_add" type="button"><span class="glyphicon glyphicon-pencil"></span></button>
+						</span>
+					</div>
+				</div>
+				<div class="panel-body">
+				<!-- Selected Genres -->
+					<ul id="selected_genres">
+					</ul>
 				</div>
 			</div>
-	</fieldset>
-	
-	<input type="submit" value="Create" />
-</form>
+			<!-- Submit -->
+			<div class="pull-right">
+				<button id="submit_btn" type="submit" class="btn btn-primary" data-loading-text="Saving">Create</button>
+			</div>
+		</fieldset>
+	</form>
+</div>
 {% endblock %}
 
 {% block body_scripts %}
@@ -67,7 +80,7 @@ New Station
 	<script type='text/javascript' src='{% static 'touchPunch.js' %}'></script>
 	<script type='text/javascript' src='{% static 'sortable.js' %}'></script>
 	<script type='text/javascript' src='{% static 'typeahead.bundle.min.js' %}'></script>
-	
+
 	<script type='text/javascript'>
 		var addressTemplate = '			<!-- URL --> \n' +
 			'				<li class="{{ address_formset.0.url.auto_id }}_container form-group addresses_set"> \n' +
@@ -79,7 +92,7 @@ New Station
 			'					</div> \n' +
 			'				</li>';
 		var genreElement = '<li class="genre">{% genre_add "%VALUE%" "%BGCOL%" %}</li>';
-		
+
 	</script>
 	<script type='text/javascript' src='{% static 'stations/createStationFormsets.js' %}'></script>
 	<script type='text/javascript' src='{% static 'stations/addGenres.js' %}'></script>

@@ -2,13 +2,19 @@
 	list-style-type: none;
 }
 
-#selected_genres {
+ul#selected_genres {
+	padding-left: 0;
+	display: inline;
 	list-style-type: none;
 }
 
 #selected_genres li {
 	display: inline-block;
 	margin-right: 2px;
+}
+
+.form-control .tag_input {
+	height: auto;
 }
 
 .label {
