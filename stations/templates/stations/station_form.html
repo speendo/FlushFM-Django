@@ -32,7 +32,7 @@ New Station
 			{{ form.description.errors }}
 			<label class="col-sm-2 control-label" for="{{ form.description.auto_id }}">{{ form.description.label }}</label>
 			<div class="col-sm-10">
-				<textarea class="col-sm-10 form-control" id="{{ form.description.auto_id }}" type="text" name="{{ form.description.name }}" rows="{{ form.description.field.widget.attrs.rows }}" cols="{{ form.description.field.widget.attrs.cols }}">{{ form.description.value |default_if_none:"" }}</textarea>
+				<textarea class="col-sm-10 form-control" id="{{ form.description.auto_id }}" type="text" name="{{ form.description.name }}" rows="4" cols="40">{{ form.description.value |default_if_none:"" }}</textarea>
 			</div>
 		</div>
 
