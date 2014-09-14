@@ -36,7 +36,6 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-	'south',  # migrations like in ruby on rails
 	'stations',
 	'players',
 )
@@ -87,5 +86,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Manually added
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-
-CRISPY_TEMPLATE_PACK = 'bootstrap3'  # for crispy forms

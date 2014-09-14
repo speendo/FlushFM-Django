@@ -12,7 +12,7 @@ class GenreForm(ModelForm):
 		widgets = {
 			'color': TextInput(attrs={'class': 'color-picker'}),
 			}
-		fields = ['name', 'description', 'color']
+		fields = ['name', 'copyOf', 'description', 'color']
 
 
 class StationForm(ModelForm):
