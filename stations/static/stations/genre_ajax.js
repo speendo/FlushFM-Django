@@ -5,6 +5,8 @@ $(document).ready(function() {
 
 		btn.button('loading');
 
+		alert($(this).serialize());
+
 		$.ajax({
 			type: $(this).attr("method"),
 			url: $(this).attr("action"),

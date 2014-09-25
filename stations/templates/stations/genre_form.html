@@ -63,7 +63,7 @@ New Genre
 
 			<!-- Example -->
 			<div class="col-sm-3 col-md-5">
-				{% genre "Preview" "FFFFFF" css_id="example" css_class="label" %}
+				{% genre_def "Preview" "FFFFFF" css_id="example" css_class="label" %}
 			</div>
 	
 			<!-- Submit -->
@@ -92,4 +92,28 @@ New Genre
 	<script src='{% static 'stations/copyOf.js' %}'></script>
 	<script src='{% static 'stations/style_example.js' %}'></script>
 	<script src='{% static 'stations/genre_ajax.js' %}'></script>
+
+	<script type="text/javascript">
+
+	var csrf_token = '{{ csrf_token }}';
+
+	$("body").bind("ajaxSend", function(elm, xhr, s){
+		if (s.type == "POST") {
+			xhr.setRequestHeader('X-CSRF-Token', csrf_token);
+		}
+	});
+
+
+	alert(csrf_token);
+
+	$.ajax({
+        type: "POST",
+        url: "/stations/genres/",
+        dataType: "json",
+        success: function (data) {
+            alert(data);
+        }
+
+});
+	</script>
 {% endblock %}

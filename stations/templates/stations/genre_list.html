@@ -1,0 +1,15 @@
+{% extends "base_with_header.html" %}
+{% load genre %}
+
+{% block pagetitle %}
+List of Genres
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% endblock %}
+
+{% block content %}
+<ul>
+	{% for g in genres %}
+		<li>{% genre g %}</li>
+	{% endfor %}
+</ul>
+{% endblock %}

@@ -5,7 +5,6 @@ from django.views.generic import CreateView, ListView
 from django.core import serializers
 
 
-# Json Response for Ajax
 class JSONResponseMixin(object):
 	"""
 	A mixin that can be used to render a JSON response.
@@ -23,23 +22,36 @@ class JSONResponseMixin(object):
 		"""
 		Returns an object that will be serialized as JSON by json.dumps().
 		"""
-		return serializers.serialize("json", context)
+		# Note: This is *EXTREMELY* naive; in reality, you'll need
+		# to do much more complex handling to ensure that arbitrary
+		# objects -- such as Django model instances or querysets
+		# -- can be serialized as JSON.
+		return context
 
 
-# List view
+# List Stations
 class StationList(ListView):
+	"""
+	List all stations stored in the database
+	"""
 	model = Station
 	context_object_name = 'stations'
 
 
 # Create genre view
 class GenreCreate(CreateView):
+	"""
+	Create a new genre
+	"""
 	model = Genre
 	form_class = GenreForm
 
 
 # Create station view
 class StationCreate(CreateView):
+	"""
+	Create a new Station
+	"""
 	model = Station
 	form_class = StationForm
 
@@ -101,3 +113,19 @@ class StationCreate(CreateView):
 				address_formset=address_formset
 			)
 		)
+
+
+# GenreList
+class GenreList(ListView, JSONResponseMixin):
+	"""
+	List Genres
+	"""
+	model = Genre
+	context_object_name = 'genres'
+
+	def render_to_response(self, context):
+		# Look for a 'format=json' GET argument
+		if self.request.GET.get('format') == 'json':
+			return self.render_to_json_response(context)
+		else:
+			return super(GenreList, self).render_to_response(context)
