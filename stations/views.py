@@ -1,32 +1,8 @@
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from stations.models import Station, Genre
 from stations.forms import StationForm, GenreFormSet, AddressFormSet, GenreForm
 from django.views.generic import CreateView, ListView
 from django.core import serializers
-
-
-class JSONResponseMixin(object):
-	"""
-	A mixin that can be used to render a JSON response.
-	"""
-	def render_to_json_response(self, context, **response_kwargs):
-		"""
-		Returns a JSON response, transforming 'context' to make the payload.
-		"""
-		return JsonResponse(
-			self.get_data(context),
-			**response_kwargs
-		)
-
-	def get_data(self, context):
-		"""
-		Returns an object that will be serialized as JSON by json.dumps().
-		"""
-		# Note: This is *EXTREMELY* naive; in reality, you'll need
-		# to do much more complex handling to ensure that arbitrary
-		# objects -- such as Django model instances or querysets
-		# -- can be serialized as JSON.
-		return context
 
 
 # List Stations
@@ -116,16 +92,12 @@ class StationCreate(CreateView):
 
 
 # GenreList
-class GenreList(ListView, JSONResponseMixin):
+class GenreListJson(ListView):
 	"""
-	List Genres
+	List Genres in JSON
 	"""
 	model = Genre
 	context_object_name = 'genres'
 
 	def render_to_response(self, context):
-		# Look for a 'format=json' GET argument
-		if self.request.GET.get('format') == 'json':
-			return self.render_to_json_response(context)
-		else:
-			return super(GenreList, self).render_to_response(context)
+		return JsonResponse(dict(genres=list(self.model.objects.values('pk', 'name', 'color'))))

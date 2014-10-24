@@ -1,0 +1,12 @@
+.twitter-typeahead {
+	float:left;
+	width:100%;
+}
+
+.twitter-typeahead .tt-hint:enabled {
+	background-color: #ffffff !important;
+}
+
+.twitter-typeahead .tt-hint:disabled {
+	background-color: #eee !important;
+}

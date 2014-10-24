@@ -5,6 +5,7 @@
 {% block scripts %}
 	{{ block.super }}
 	<link rel="stylesheet" href='{% static 'stations/pick-a-color/pick-a-color-1.2.3.min.css' %}'>
+	<link rel="stylesheet" href="{% static 'typeahead.css' %}">
 {% endblock %}
 
 {% block pagetitle %}
@@ -36,8 +37,8 @@ New Genre
 				<div class="input-group">
 					<span class="input-group-addon">
 						<input id="is_copy" type="checkbox">
-                    </span>
-					<input class="form-control copy_input" id="{{ form.copyOf.auto_id }}" type="text" name="{{ form.copyOf.name }}" maxlength="{{ form.copyOf.field.widget.attrs.maxlength }}" value="{{ form.name.value |default_if_none:"" }}"/>
+					</span>
+					<input class="form-control copy_input typeahead" id="{{ form.copyOf.auto_id }}" type="text" name="{{ form.copyOf.name }}" maxlength="{{ form.copyOf.field.widget.attrs.maxlength }}" value="{{ form.name.value |default_if_none:"" }}"/>
 				</div>
 			</div>
 		</div>
@@ -78,6 +79,7 @@ New Genre
 
 {% block body_scripts %}
 	{{ block.super }}
+	<script type='text/javascript' src='{% static 'typeahead.bundle.min.js' %}'></script>
 	<script src='{% static 'stations/pick-a-color/tinycolor-0.9.15.min.js' %}'></script>
 	<script src='{% static 'stations/pick-a-color/pick-a-color-1.2.3.min.js' %}'></script>
 
@@ -91,29 +93,6 @@ New Genre
 
 	<script src='{% static 'stations/copyOf.js' %}'></script>
 	<script src='{% static 'stations/style_example.js' %}'></script>
-	<script src='{% static 'stations/genre_ajax.js' %}'></script>
-
-	<script type="text/javascript">
-
-	var csrf_token = '{{ csrf_token }}';
-
-	$("body").bind("ajaxSend", function(elm, xhr, s){
-		if (s.type == "POST") {
-			xhr.setRequestHeader('X-CSRF-Token', csrf_token);
-		}
-	});
-
-
-	alert(csrf_token);
-
-	$.ajax({
-        type: "POST",
-        url: "/stations/genres/",
-        dataType: "json",
-        success: function (data) {
-            alert(data);
-        }
-
-});
-	</script>
+	<script src='{% static 'stations/genres_typeahead.js' %}'></script>
+	<script src='{% static 'stations/genre_ajax_submit.js' %}'></script>
 {% endblock %}
