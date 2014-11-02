@@ -17,14 +17,16 @@ function appendList() {
 	}
 }
 
-function addItems() {
-	$('.genre_add').click(function() {
-		appendList();
-	});
-	$('.genre_name_input').keyup(function(event){
-		if(event.keyCode == 13) {
-			appendList();
-		}
+function addItems(address) {
+	$.getJSON(address, function(data) { //maybe useless
+		$('.genre_add').click(function() {
+			appendList(data);
+		});
+		$('.genre_name_input').keyup(function(event){
+			if(event.keyCode == 13) {
+				appendList();
+			}
+		});
 	});
 }
 
@@ -76,9 +78,9 @@ function autoComplete() {
 }
 
 $(document).ready(function() {
-	//autoComplete();
+	var address = "/stations/genres_json/";
 	
-	addItems();
+	addItems(address);
 	
 	removeItem();
 	

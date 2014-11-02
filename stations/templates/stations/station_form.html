@@ -4,7 +4,8 @@
 
 {% block scripts %}
 {{ block.super }}
-<link rel="stylesheet" href="{% static 'stations/station_form.css' %}">
+	<link rel="stylesheet" href="{% static 'stations/station_form.css' %}">
+	<link rel="stylesheet" href="{% static 'typeahead.css' %}">
 {% endblock %}
 
 {% block pagetitle %}
@@ -14,7 +15,7 @@ New Station
 
 {% block content %}
 <div class="container-fluid">
-	<form class="form-horizontal noEnterSubmit" action="{% url 'stations:list' %}" method="post" role="form">
+	<form class="form-horizontal noEnterSubmit" action="{% url 'stations:station_list' %}" method="post" role="form">
 		{% csrf_token %}
 		{{ form.non_field_errors }}
 
@@ -77,10 +78,12 @@ New Station
 
 {% block body_scripts %}
 	{{ block.super }}
+	<script type='text/javascript' src='{% static 'typeahead.bundle.min.js' %}'></script>
 	<script type='text/javascript' src='{% static 'touchPunch.js' %}'></script>
 	<script type='text/javascript' src='{% static 'sortable.js' %}'></script>
 	<script type='text/javascript' src='{% static 'typeahead.bundle.min.js' %}'></script>
 
+	<script src='{% static 'stations/genres_typeahead.js' %}'></script>
 	<script type='text/javascript'>
 		var addressTemplate = '			<!-- URL --> \n' +
 			'				<li class="{{ address_formset.0.url.auto_id }}_container form-group addresses_set"> \n' +

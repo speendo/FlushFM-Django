@@ -14,7 +14,6 @@ New Genre
 {% endblock %}
 
 {% block content %}
-
 <div class="container-fluid">
 	<form id="genre_form" class="form-horizontal" action="{{ request.path }}" method="post" role="form">
 	{% csrf_token %}
@@ -34,12 +33,13 @@ New Genre
 			{{ form.copyOf.errors }}
 			<label class="col-sm-2 control-label" for="{{ form.copyOf.auto_id }}">{{ form.copyOf.label }}</label>
 			<div class="col-sm-10">
-				<div class="input-group">
+				<div class="input-group copyOf_toggle">
 					<span class="input-group-addon">
 						<input id="is_copy" type="checkbox">
 					</span>
 					<input class="form-control copy_input typeahead" id="{{ form.copyOf.auto_id }}" type="text" name="{{ form.copyOf.name }}" maxlength="{{ form.copyOf.field.widget.attrs.maxlength }}" value="{{ form.name.value |default_if_none:"" }}"/>
 				</div>
+				<span id="copy_of_selected" class="copyOf_toggle" style="display: none"></span>
 			</div>
 		</div>
 
@@ -90,6 +90,10 @@ New Genre
 			inlineDropdown: true
 		});
 	</script>
+
+
+	{% genre_def_js %}
+	{% genre_add_js %}
 
 	<script src='{% static 'stations/copyOf.js' %}'></script>
 	<script src='{% static 'stations/style_example.js' %}'></script>

@@ -9,11 +9,21 @@ tagStart = ('<span {:s}class="label genre{:s}" style="background-color:#{:s};">'
 tagEnd = '</span>'
 tagRemove = '<span class="glyphicon glyphicon-remove remove"></span>'
 
+jsStart = '<script id="{:s}_template" type="text/x-handlebars-template">'
+jsEnd = '</script>'
+
+@register.simple_tag
+def genre_def_js():
+	return (jsStart + genre_def("{{{{genre}}}}", "{{{{color}}}}", "{{{{css_id}}}}", "{{{{css_class}}}}") + jsEnd).format("genre_def")
+
+@register.simple_tag
+def genre_add_js():
+	return (jsStart + genre_add("{{{{genre}}}}", "{{{{color}}}}", "{{{{css_id}}}}", "{{{{css_class}}}}") + jsEnd).format("genre_add")
 
 @register.simple_tag
 def genre_def(name, color, css_id="", css_class=""):
 	if css_id != "":
-		css_id = 'id=' + css_id + ' '
+		css_id = 'id="' + css_id + '" '
 
 	if css_class != "":
 		css_class = ' ' + css_class
@@ -23,7 +33,7 @@ def genre_def(name, color, css_id="", css_class=""):
 @register.simple_tag
 def genre_add(name, color, css_id="", css_class=""):
 	if css_id != "":
-		css_id = 'id=' + css_id + ' '
+		css_id = 'id="' + css_id + '" '
 
 	if css_class != "":
 		css_class = ' ' + css_class
